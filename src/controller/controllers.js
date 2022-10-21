@@ -15,6 +15,12 @@ function removeProdCode(arr) {
 	return arr;
 }
 
+function removeFirst(obj) {
+delete obj[0].product_code;
+	return obj;
+}
+
+
 function filterDead(obj) {
 	deadKeys = Object.keys(obj).filter(
 		k => obj[k] === 'n/a' || obj[k] === '*' || obj[k] === ''
@@ -58,6 +64,19 @@ var automation = {};
 var elecPhys = {};
 
 // THIS NEEDS WORK
+
+async function getDesc(req) {
+	try {
+		results = await db.id('SELECT description FROM cam_info WHERE product_code = ?', [
+			req.params.product_code
+		]);
+		return results;
+	} catch (e) {
+		console.log(e);
+		const status = 500;
+		return status;
+	}
+}
 
 async function getFeatures(req) {
 	try {
@@ -139,12 +158,14 @@ async function getElecPhys(req) {
 }
 
 module.exports = {
+	removeFirst,
 	removeProdCode,
 	filterDead,
 	filterGoodVals,
 	listAllKeys,
 	listAllVals,
 	getAll,
+	getDesc,
 	getFeatures,
 	getInfo,
 	getCamSpecs,

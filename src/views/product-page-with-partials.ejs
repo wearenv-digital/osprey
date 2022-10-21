@@ -151,7 +151,7 @@
 						</li>
 						<li class="list-item space">
 							<h4 class="heading-5"><span class="text-span-4">/</span>
-								<%= data.dataObj.info.product_code %>
+								<%= data.product_code %>
 							</h4>
 						</li>
 					</ul>
@@ -167,7 +167,7 @@
 										<div class="image-bullet-wrapper">
 											<div class="image-frame" id="main-product-image">
 												<span class="helper-frame">
-													<img src="<%= data.dataObj.info.image_link %>" loading="lazy" width="345" height="345"
+													<img src="<%= info.image_link %>" loading="lazy" width="345" height="345"
 														sizes="(max-width: 479px) 300px, (max-width: 767px) 63vw, 345px"
 														srcset="<%= data.dataObj.info.image_link %> 500w, <%= data.dataObj.info.image_link %> 505w"
 														alt="" class="product-image main-product-img" />
@@ -175,7 +175,7 @@
 											</div>
 											<div class="bullet-wrapper">
 												<ul class="ft-list" role="list">
-													<% data.features.forEach(element=> { %> <li class="ft-element">
+													<% features.forEach((element)=> { %> <li class="ft-element">
 															<%= element %>
 														</li>
 														<% }) %>

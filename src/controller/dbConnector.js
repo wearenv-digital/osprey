@@ -42,6 +42,7 @@ dbResults.id = (sqlQuery, params) => {
 	});
 };
 
+
 // dbResults.id('SELECT * FROM cam_info WHERE product_code =?', [req.params.product_code])
 
 module.exports = dbResults;

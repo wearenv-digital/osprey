@@ -1,11 +1,11 @@
 const express = require('express');
 var router = express.Router();
-const processing = require('../controller/processing');
-const db = require('../controller/dbConnector');
-
+// const processing = require('../controller/processing');
+// const db = require('../controller/dbConnector');
 const controllers = require('../controller/controllers');
 // var logger = require('../services/logger');
-const path = require('path');
+// const path = require('path');
+// const { features } = require('process');
 
 router.use(function timeLog(req, res, next) {
 	console.log('Time: ', Date.now());
@@ -28,25 +28,333 @@ router.get('/product-page', async (req, res) => {
 
 router.get('/product-page/:product_code', async (req, res) => {
 	try {
-		let results = await controllers.getInfo(req);
+		var camInfo = {};
+		var camFeatures = {};
+		var camSpecs = {};
+		var audioVideo = {};
+		var automation = {};
+		var elecPhys = {};
+		var description = {};
 
-		return res.json(results);
+		camInfo = await controllers.getInfo(req);
+		camFeatures = await controllers.getFeatures(req);
+		camSpecs = await controllers.getCamSpecs(req);
+		audioVideo = await controllers.getAudioVideo(req);
+		automation = await controllers.getAutomation(req);
+		elecPhys = await controllers.getElecPhys(req);
+		description = await controllers.getDesc(req);
+
+		camFeatures = controllers.removeFirst(camFeatures);
+		camSpecs = controllers.removeFirst(camSpecs);
+		audioVideo = controllers.removeFirst(audioVideo);
+		automation = controllers.removeFirst(automation);
+		elecPhys = controllers.removeFirst(elecPhys);
+
+		camInfo = camInfo[0];
+		camFeatures = camFeatures[0];
+		camSpecs = camSpecs[0];
+		audioVideo = audioVideo[0];
+		automation = automation[0];
+		elecPhys = elecPhys[0];
+
+
+		var allInfoKeys = controllers.listAllKeys(camInfo);
+		var allFeatureKeys = controllers.listAllKeys(camFeatures);
+		var allAvKeys = controllers.listAllKeys(audioVideo);
+		var allSpecsKeys = controllers.listAllKeys(camSpecs);
+		var allAutoKeys = controllers.listAllKeys(automation);
+		var allElecKeys = controllers.listAllKeys(elecPhys);
+
+		var deadInfoKeys = controllers.filterDead(camInfo);
+		var deadFeaturekeys = controllers.filterDead(camFeatures);
+		var deadSpecsKeys = controllers.filterDead(camSpecs);
+		var deadAvKeys = controllers.filterDead(audioVideo);
+		var deadAutoKeys = controllers.filterDead(automation);
+		var deadElecKeys = controllers.filterDead(elecPhys);
+
+		var allInfoVals = controllers.listAllVals(camInfo);
+		var allFeaturesVals = controllers.listAllVals(camFeatures);
+		var allSpecsVals = controllers.listAllVals(camSpecs);
+		var allAvVals = controllers.listAllVals(audioVideo);
+		var allAutoVals = controllers.listAllVals(automation);
+		var allElecVals = controllers.listAllVals(elecPhys);
+
+		var newInfoKeys = [];
+		var newFeaturesKeys = [];
+		var newSpecsKeys = [];
+		var newAvKeys = [];
+		var newAutoKeys = [];
+		var newElecKeys = [];
+
+		newInfoKeys = allInfoKeys.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadInfoKeys.length; i++) {
+				if (value === deadInfoKeys[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		newFeaturesKeys = allFeatureKeys.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadFeaturekeys.length; i++) {
+				if (value === deadFeaturekeys[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		newSpecsKeys = allSpecsKeys.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadSpecsKeys.length; i++) {
+				if (value === deadSpecsKeys[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		newAvKeys = allAvKeys.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadAvKeys.length; i++) {
+				if (value === deadAvKeys[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		newAutoKeys = allAutoKeys.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadAutoKeys.length; i++) {
+				if (value === deadAutoKeys[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		newElecKeys = allElecKeys.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadElecKeys.length; i++) {
+				if (value === deadElecKeys[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		var newInfoVals = [];
+		var newFeaturesVals = [];
+		var newSpecsVals = [];
+		var newAvVals = [];
+		var newAutoVals = [];
+		var newElecVals = [];
+		const deadVals = ['*', 'n/a', ''];
+
+		newInfoVals = allInfoVals.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadVals.length; i++) {
+				if (value === deadVals[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		newFeaturesVals = allFeaturesVals.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadVals.length; i++) {
+				if (value === deadVals[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+
+
+		// Get good specs values by comparing to deadVals
+		newSpecsVals = allSpecsVals.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadVals.length; i++) {
+				if (value === deadVals[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		// get good AV Values by comparing to deadVal
+
+		newAvVals = allAvVals.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadVals.length; i++) {
+				if (value === deadVals[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		// Get good automation values by cmparing to deadVals
+
+		newAutoVals = allAutoVals.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadVals.length; i++) {
+				if (value === deadVals[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		// Get good ElecPhys values by comparing to deadVals
+
+		newElecVals = allElecVals.reduce(function (prev, value) {
+			var isDuplicate = false;
+			for (var i = 0; i < deadVals.length; i++) {
+				if (value === deadVals[i]) {
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (!isDuplicate) {
+				prev.push(value);
+			}
+			return prev;
+		}, []);
+
+		var finalInfo = {};
+		var finalSpecs = {};
+		var finalFeatures = {};
+		var finalAv = {};
+		var finalAutomation = {};
+		var finalElecPhys = {};
+
+		function finalObjCreator(newKeys, newVals) {
+			var obj = {};
+			obj = newKeys.forEach((key, index) => {
+				obj[key] = newVals[index];
+			});
+			return obj;
+		}
+		// Object.fromEntries(arr1.map((a, i) => [a, arr2[i]]));
+
+		finalAv = Object.fromEntries(newAvKeys.map((a, i) => [a, newAvVals[i]]));
+		finalSpecs = Object.fromEntries(
+			newSpecsKeys.map((a, i) => [a, newSpecsVals[i]])
+		);
+		finalFeatures = Object.fromEntries(
+			newFeaturesKeys.map((a, i) => [a, newFeaturesVals[i]])
+		);
+		finalInfo = Object.fromEntries(newInfoKeys.map((a, i) => [a, newInfoVals[i]]));
+		finalAutomation = Object.fromEntries(
+			newAutoKeys.map((a, i) => [a, newAutoVals[i]])
+		);
+		finalElecPhys = Object.fromEntries(
+			newElecKeys.map((a, i) => [a, newElecVals[i]])
+		);
+
+		// res.send(finalElecPhys);
+		// res.send(finalAv)
+		// res.send(finalSpecs)
+
+		var finalObj = {};
+
+		finalObj.features = finalFeatures;
+		finalObj.info = finalInfo;
+		finalObj.specs = finalSpecs;
+		finalObj.av = finalAv;
+		finalObj.automation = finalAutomation;
+		finalObj.elecPhys = finalElecPhys;
+
+		// res.send(finalInfo)
+		// return;
+
+		var finalArr = [];
+		finalArr.push(finalFeatures);
+		finalArr.push(finalInfo);
+		finalArr.push(finalAv);
+		finalArr.push(finalAutomation);
+		finalArr.push(finalElecPhys);
+
+		description = Object.values(description);
+
+		var data = {};
+
+		data = {
+			features: finalFeatures,
+			dataObj: finalObj,
+			dataArr: finalArr,
+			description: description
+		};
+
+		data.product_code = finalObj.info.product_code;
+		// res.send(data);
+		// return
+		res.render('product-page-with-partials', {
+			features: newFeaturesVals,
+			description: description,
+			data: data,
+			specs: finalSpecs,
+			av: finalAv,
+			auto: finalAutomation,
+			elecPhys: finalElecPhys,
+			info: finalInfo
+		});
+		return;
 	} catch (e) {
 		console.log(e);
-		return res.sendStatus(500);
+		return res.render('index.ejs');
 	}
 });
-
-// Do not delete!
-// router.get('/product-page', async (req, res, next) => {
-// 	try {
-// 		let results = await db.all();
-// 		return res.json(results);
-// 	} catch (e) {
-// 		console.log(e);
-// 		return res.sendStatus(500);
-// 	}
-// });
 
 router.get('/layout', (req, res) => {
 	res.render('layout');
@@ -342,47 +650,5 @@ router.get('/resources/tools', (req, res) => {
 router.get('/resources/press', (req, res) => {
 	res.render('press');
 });
-
-// router.get('/admin', (req, res) => {
-// 	res.redirect('http://172.19.0.4');
-// });
-
-// router.get('/product-page/:product_code', (req, res) => {
-// 	var data = controllers.getFeatures(req);
-// 	res.send(data);
-// });
-
-// router.get('/product-page:/product_code', (req, res) => {
-// 	if (!req.params || req.params == undefined) {
-// 		res.send('<h1>NOPE</h1>');
-// 	} else {
-// 		data = processing.getData(req);
-// 		res.send({
-// 			features: data.features,
-// 			dataObj: data.finalObj,
-// 			dataArr: data.dataArr,
-// 			description: data.description
-// 		});
-// 		console.log(data);
-// 	}
-// });
-
-// router.get('/product-page/:product_code', (req, res) => {
-// 	if (!req.params || req.params == undefined) {
-// 		res.render('new');
-// 	} else {
-// 		var data = processing.getData(req);
-// 		res.send(data);
-// 		// res.render('product-page-with-partials', {
-// 		// 	description: description,
-// 		// 	specs: finalSpecs,
-// 		// 	data: data,
-// 		// 	av: finalAv,
-// 		// 	auto: finalAutomation,
-// 		// 	elecPhys: finalElecPhys
-// 		// });
-// 		console.log(data.finalSpecs);
-// 	}
-// });
 
 module.exports = router;

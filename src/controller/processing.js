@@ -1,9 +1,6 @@
 const controllers = require('./controllers');
 const db = require('./controllers');
 
-
-
-
 function removeProdCode(arr) {
 	arr = arr.filter(item => !item.length < 1);
 	arr = arr.slice(1, arr.length);
@@ -19,12 +16,12 @@ function getRequestedData(req) {
 		var elecPhys = await controllers.getElecPhys(req);
 
 		if (
-			(!camInfo ||
-				!camFeatures ||
-				!camSpecs ||
-				!audioVideo ||
-				!automation ||
-				!elecPhys) === ''
+			!camInfo ||
+			!camFeatures ||
+			!camSpecs ||
+			!audioVideo ||
+			!automation ||
+			!elecPhys
 		) {
 			console.log('empty data');
 			return reject;
