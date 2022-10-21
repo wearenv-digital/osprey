@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   node-app:
-    container_name: node-app
+    container_name: node-app-osprey
     build:
       context: .
       args:
@@ -52,7 +52,7 @@ services:
     restart: always
     ports:
       - 80:80
-      - 8080:8080
+      - 8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/traefik.toml:/etc/traefik/traefik.toml
@@ -61,28 +61,28 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
-      # - traefik.http.routers.api.rule=Host(`monitor.docker`)
+      - traefik.http.routers.api.rule=Host(`monitor.docker`)
       - traefik.http.routers.api.entrypoints=web
       - traefik.http.routers.api.service=api@internal
       - traefik.port=8080"
     networks:
       - traefik-proxy
 
-  sshtunnel:
-    restart: always
-    image: ghcr.io/linuxserver/openssh-server
-    container_name: sshtunnel
-    ports:
-      - 2222:2222
-    volumes:
-      - ~/.ssh/docker-ssh-2.pub:/etc/tunnel/docker-ssh-2.pub
-      - ./openssh/sshd_config:/config/ssh_host_keys/sshd_config
-    environment:
-      - PUBLIC_KEY_FILE=/etc/tunnel/docker-ssh-2.pub
-      - USER_NAME=proxy
-      - SUDO_ACCESS=true
-    networks:
-      - traefik-proxy
+  # sshtunnel:
+  #   restart: always
+  #   image: ghcr.io/linuxserver/openssh-server
+  #   container_name: sshtunnel
+  #   ports:
+  #     - 2222:2222
+  #   volumes:
+  #     - ~/.ssh/docker-ssh-2.pub:/etc/tunnel/docker-ssh-2.pub
+  #     - ./openssh/sshd_config:/config/ssh_host_keys/sshd_config
+  #   environment:
+  #     - PUBLIC_KEY_FILE=/etc/tunnel/docker-ssh-2.pub
+  #     - USER_NAME=proxy
+  #     - SUDO_ACCESS=true
+  #   networks:
+  #     - traefik-proxy
 
   sql:
     build: ./src/sql/

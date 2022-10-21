@@ -26,6 +26,17 @@ router.get('/product-page', async (req, res) => {
 	}
 });
 
+router.get('/product-page/:product_code', async (req, res) => {
+	try {
+		let results = await controllers.getInfo(req);
+
+		return res.json(results);
+	} catch (e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+});
+
 // Do not delete!
 // router.get('/product-page', async (req, res, next) => {
 // 	try {

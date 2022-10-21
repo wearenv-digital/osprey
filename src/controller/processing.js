@@ -1,18 +1,36 @@
 const controllers = require('./controllers');
+const db = require('./controllers');
 
-async function processAll(req, res) {
-	try {
-		const data = await controllers.getAll();
 
-		return data;
-	} catch (error) {}
+
+
+function removeProdCode(arr) {
+	arr = arr.filter(item => !item.length < 1);
+	arr = arr.slice(1, arr.length);
+	return arr;
 }
+function getRequestedData(req) {
+	return new Promise(async (resolve, reject) => {
+		var camInfo = await controllers.getInfo(req);
+		var camFeatures = await controllers.getFeatures(req);
+		var camSpecs = await controllers.getCamSpecs(req);
+		var audioVideo = await controllers.getAudioVideo(req);
+		var automation = await controllers.getAutomation(req);
+		var elecPhys = await controllers.getElecPhys(req);
 
-async function getAllData(req) {
-	var data = await controllers.getAll();
-	var dataObject = {};
-	data = dataObject;
-	return dataObject;
+		if (
+			(!camInfo ||
+				!camFeatures ||
+				!camSpecs ||
+				!audioVideo ||
+				!automation ||
+				!elecPhys) === ''
+		) {
+			console.log('empty data');
+			return reject;
+		}
+		return resolve();
+	});
 }
 
 async function getData(req) {
@@ -26,7 +44,7 @@ async function getData(req) {
 	// console.log(typeof camFeatures);
 	// console.log(camFeatures);
 	function removeProdCode(arr) {
-		arr = arr.filter((item) => !item.length < 1);
+		arr = arr.filter(item => !item.length < 1);
 		arr = arr.slice(1, arr.length);
 		return arr;
 	}
@@ -56,7 +74,7 @@ async function getData(req) {
 
 	function filterDead(obj) {
 		deadKeys = Object.keys(obj).filter(
-			(k) => obj[k] === 'n/a' || obj[k] === '*' || obj[k] === ''
+			k => obj[k] === 'n/a' || obj[k] === '*' || obj[k] === ''
 		);
 		return deadKeys;
 	}
@@ -318,6 +336,5 @@ async function getData(req) {
 
 module.exports = {
 	getData,
-	processAll,
-	getAllData
+	getRequestedData
 };

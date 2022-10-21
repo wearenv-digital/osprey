@@ -9,21 +9,38 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// THIS WORKS
-async function getAll() {
-	try {
-		let results = await db.all();
-		return results;
-	}
-	catch (e) {
-		console.log(e);
-		const status = 500;
-		return status;
-	}
+function removeProdCode(arr) {
+	arr = arr.filter(item => !item.length < 1);
+	arr = arr.slice(1, arr.length);
+	return arr;
 }
 
-// THIS NEEDS WORK
-async function getInfo(req) {
+function filterDead(obj) {
+	deadKeys = Object.keys(obj).filter(
+		k => obj[k] === 'n/a' || obj[k] === '*' || obj[k] === ''
+	);
+	return deadKeys;
+}
+
+function filterGoodVals(obj) {
+	goodVals = Object.values(obj).filter(
+		k => obj[k] !== 'n/a' || obj[k] !== '*' || obj[k] !== ''
+	);
+	return goodVals;
+}
+
+function listAllKeys(obj) {
+	allKeys = Object.keys(obj);
+	return allKeys;
+}
+
+function listAllVals(obj) {
+	allVals = Object.values(obj);
+	return allVals;
+}
+
+// THIS WORKS
+async function getAll() {
 	try {
 		let results = await db.all();
 		return results;
@@ -34,120 +51,104 @@ async function getInfo(req) {
 	}
 }
 
+var camInfo = {};
+var camSpecs = {};
+var audioVideo = {};
+var automation = {};
+var elecPhys = {};
 
-// async function getFeatures(req) {
-// 	var connection = await util.promisify(pool.getConnection.bind(pool))();
-// 	console.log(`connected as id ${connection.threadId}`);
-// 	logger.customLogger.log('debug', 'await-connection', 'connection');
-// 	var rows = await connection.query.bind(connection)(
-// 		'SELECT * FROM cam_features WHERE product_code = ?',
-// 		[req.params.product_code]
-// 	);
-// 	var result;
-// 	logger.customLogger.log('error', 'result:', result);
-// 	Object.keys(rows).forEach(function (key) {
-// 		result = rows[key];
-// 		// console.log(result);
-// 	});
-// 	return result;
-// }
+// THIS NEEDS WORK
 
-// async function getInfo(req) {
-// 	var connection = await util.promisify(pool.getConnection.bind(pool))();
-// 	console.log(`connected as id ${connection.threadId}`);
-// 	var rows = await util.promisify(connection.query.bind(connection))(
-// 		'SELECT * FROM cam_info WHERE product_code = ?',
-// 		[req.params.product_code]
-// 	);
-// 	var result;
-// 	Object.keys(rows).forEach(function (key) {
-// 		result = rows[key];
-// 	});
-// 	return result;
-// }
+async function getFeatures(req) {
+	try {
+		results = await db.id('SELECT * FROM cam_features WHERE product_code = ?', [
+			req.params.product_code
+		]);
+		return results;
+	} catch (e) {
+		console.log(e);
+		const status = 500;
+		return status;
+	}
+}
 
-// async function getCamSpecs(req) {
-// 	var connection = await util.promisify(pool.getConnection.bind(pool))();
-// 	console.log(`connected as id ${connection.threadId}`);
-// 	var rows = await util.promisify(connection.query.bind(connection))(
-// 		'SELECT * FROM cam_specs WHERE product_code = ?',
-// 		[req.params.product_code]
-// 	);
-// 	var result;
-// 	Object.keys(rows).forEach(function (key) {
-// 		result = rows[key];
-// 		// console.log(result);
-// 	});
-// 	return result;
-// }
+async function getInfo(req) {
+	try {
+		results = await db.id('SELECT * FROM cam_info WHERE product_code = ?', [
+			req.params.product_code
+		]);
+		return results;
+	} catch (e) {
+		console.log(e);
+		const status = 500;
+		return status;
+	}
+}
 
-// async function getAudioVideo(req) {
-// 	var connection = await util.promisify(pool.getConnection.bind(pool))();
-// 	console.log(`connected as id ${connection.threadId}`);
-// 	var rows = await util.promisify(connection.query.bind(connection))(
-// 		'SELECT * FROM audio_video WHERE product_code = ?',
-// 		[req.params.product_code]
-// 	);
-// 	var result;
-// 	Object.keys(rows).forEach(function (key) {
-// 		result = rows[key];
-// 		// console.log(result);
-// 	});
-// 	return result;
-// }
+async function getCamSpecs(req) {
+	try {
+		results = await db.id('SELECT * FROM cam_specs WHERE product_code = ?', [
+			req.params.product_code
+		]);
+		return results;
+	} catch (e) {
+		console.log(e);
+		const status = 500;
+		return status;
+	}
+}
 
-// async function getAutomation(req) {
-// 	var connection = await util.promisify(pool.getConnection.bind(pool))();
-// 	console.log(`connected as id ${connection.threadId}`);
-// 	var rows = await util.promisify(connection.query.bind(connection))(
-// 		'SELECT * FROM automation WHERE product_code = ?',
-// 		[req.params.product_code]
-// 	);
-// 	connection.release();
-// 	var result;
-// 	Object.keys(rows).forEach(function (key) {
-// 		result = rows[key];
-// 		// console.log(result);
-// 	});
-// 	return result;
-// }
+async function getAudioVideo(req) {
+	try {
+		results = await db.id('SELECT * FROM audio_video WHERE product_code = ?', [
+			req.params.product_code
+		]);
+		return results;
+	} catch (e) {
+		console.log(e);
+		const status = 500;
+		return status;
+	}
+}
 
-// async function getElecPhys(req) {
-// 	var connection = await util.promisify(pool.getConnection.bind(pool))();
-// 	console.log(`connected as id ${connection.threadId}`);
-// 	var rows = await util.promisify(connection.query.bind(connection))(
-// 		'SELECT * FROM electrical_physical WHERE product_code = ?',
-// 		[req.params.product_code]
-// 	);
-// 	var result;
-// 	Object.keys(rows).forEach(function (key) {
-// 		result = rows[key];
-// 		// console.log(result);
-// 	});
-// 	return result;
-// }
+async function getAutomation(req) {
+	try {
+		results = await db.id('SELECT * FROM automation WHERE product_code = ?', [
+			req.params.product_code
+		]);
+		return results;
+	} catch (e) {
+		console.log(e);
+		const status = 500;
+		return status;
+	}
+}
 
-// async function getDesc(req) {
-// 	var connection = await util.promisify(pool.getConnection.bind(pool))();
-// 	console.log(`connected as id ${connection.threadId}`);
-// 	var rows = await util.promisify(connection.query.bind(connection))(
-// 		'SELECT description from cam_info WHERE product_code =?',
-// 		[req.params.product_code]
-// 	);
-// 	var result;
-// 	Object.keys(rows).forEach(function (key) {
-// 		result = rows[key];
-// 	});
-// 	return result;
-// }
+async function getElecPhys(req) {
+	try {
+		results = await db.id(
+			'SELECT * FROM electrical_physical WHERE product_code = ?',
+			[req.params.product_code]
+		);
+		return results;
+	} catch (e) {
+		console.log(e);
+		const status = 500;
+		return status;
+	}
+}
 
 module.exports = {
-	// getFeatures,
-	// getInfo,
-	// getCamSpecs,
-	// getAudioVideo,
-	// getAutomation,
-	// getElecPhys,
-	// getDesc
-	getAll
+	removeProdCode,
+	filterDead,
+	filterGoodVals,
+	listAllKeys,
+	listAllVals,
+	getAll,
+	getFeatures,
+	getInfo,
+	getCamSpecs,
+	getAudioVideo,
+	getAutomation,
+	getElecPhys
 };

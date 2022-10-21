@@ -1,13 +1,11 @@
 const { query } = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 require('dotenv').config();
-// var logger = require('../services/logger');
 
 // if (!process.env.NODE_ENV === 'development') { };
 
 const pool = mysql.createPool({
 	host: 'sql',
-	// host: 'localhost',
 	user: 'root',
 	password: 'password',
 	database: 'osprey',
@@ -31,11 +29,11 @@ dbResults.all = () => {
 };
 
 // LETS TRY AND MAKE THIS REUSABLE
-dbResults.id = (prodCode) => {
+dbResults.id = (sqlQuery, params) => {
 	return new Promise((resolve, reject) => {
-		const sqlQuery = `SELECT * FROM cam_info WHERE product_code = ?`;
+		// const sqlQuery = `SELECT * FROM cam_info WHERE product_code = ?`;
 
-		pool.query(sqlQuery, [prodCode], (err, results) => {
+		pool.query(sqlQuery, params, (err, results) => {
 			if (err) {
 				return reject(err);
 			}
@@ -43,6 +41,8 @@ dbResults.id = (prodCode) => {
 		});
 	});
 };
+
+// dbResults.id('SELECT * FROM cam_info WHERE product_code =?', [req.params.product_code])
 
 module.exports = dbResults;
 
