@@ -1,3 +1,3 @@
 FROM mysql:latest
-COPY db_init.sql /docker-entrypoint-initdb.d
+COPY db_init_new.sql /docker-entrypoint-initdb.d
 EXPOSE 3306

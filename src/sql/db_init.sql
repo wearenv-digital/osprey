@@ -231,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `electrical_physical` (
   `Thermal` varchar(1) DEFAULT NULL,
   `Physical` varchar(1) DEFAULT NULL,
   `Material` varchar(57) DEFAULT NULL,
-  `Operating Temp (Celcius))` varchar(45) DEFAULT NULL,
+  `Operating Temp (Celcius)` varchar(45) DEFAULT NULL,
   `Relative Humidity` varchar(29) DEFAULT NULL,
   `Certification/s` varchar(1) DEFAULT NULL,
   `Impact Protection` varchar(4) DEFAULT NULL,

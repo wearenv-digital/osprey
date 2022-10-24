@@ -16,4 +16,4 @@ ENV PORT 3030
 
 EXPOSE $PORT
 
-CMD ["nodemon", "./src/server/server.js"]
+CMD ["nodemon", "./server.js"]

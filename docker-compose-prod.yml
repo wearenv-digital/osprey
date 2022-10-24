@@ -1,5 +1,14 @@
 version: '3.7'
 
+volumes:
+  data:
+
+networks:
+  traefik-proxy:
+    name: traefik-proxy
+  backend:
+
+
 services:
 
   node-app:
@@ -10,85 +19,106 @@ services:
         NODE_ENV: development
     environment:
       - NODE_ENV=development
+    command: node server.js
 
-    command: npm run dev
+    # Traefik Stuff
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-proxy
+      - traefik.http.routers.node-app.rule=Host(`3.11.230.233`)
+      - traefik.hhtp.services.node-app.loadbalancer.server.port=3030
     networks:
-      - app-network
+      - traefik-proxy
     volumes:
       - ./src:/app/src:ro
+      - ./winston_logs/:/app/winston_logs/
 
   webserver:
-      container_name: webserver
-      image: nginx:stable-alpine
-      ports:
-        - 80:80
-      restart: unless-stopped
-      networks:
-        - app-network
-      depends_on:
-        - node-app
-      volumes:
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ./nginx/logs:/var/log/nginx
-        # - web-root:/var/www/html
+    container_name: webserver
+    image: httpd:latest
+    ports:
+      - 8080:80
+
+    # Traefik Stuff
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-proxy
+      - traefik.http.routers.apache.rule=Host(`apache.docker`)
+      - traefik.http.routers.apache.entrypoints=web
+      - traefik.port=80
+    volumes:
+      - ./apache/conf/httpd.conf:/conf/httpd.conf
+    networks:
+      - traefik-proxy
+      - backend
+
+# for production
+# make sure traefik.toml IS NOT INSECURE
+  traefik:
+    container_name: traefik
+    image: traefik:v2.4
+    restart: always
+    ports:
+      - 80:80
+      - 8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/:/etc/traefik/
+
+    # Traefik Stuff
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-proxy
+      - traefik.http.routers.api.rule=Host(`monitor.docker`)
+      - traefik.http.routers.api.entrypoints=web
+      - traefik.http.routers.api.service=api@internal
+      - traefik.http.routers.traefik.rule=Host(`3.11.230.233`)
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.port=8080
+    networks:
+      - traefik-proxy
 
   sql:
     build: ./src/sql/
+    user: "1000:50"
     container_name: sql
     restart: unless-stopped
-    command: --max_allowed_packet=32505856
+    command: mysqld --general-log=1 --general-log-file=/var/lib/mysql/general-log.log --max_allowed_packet=1073741824 --lower_case_table_names=0
     environment:
       MYSQL_DATABASE: 'osprey'
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - '3306:3306'
-    expose:
-      - '3306'
-      - '33060'
+      - 3306:3306
     volumes:
-      - ./src/sql/mysql:/var/lib/mysql
+      - ./src/sql/mysql/:/var/lib/mysql/
+      - ./src/sql/logs:/var/log/*
     networks:
-      - app-network
-
-  # admin:
-  #   image: phpmyadmin:fpm-alpine
-  #   container_name: admin
-  #   restart: unless-stopped
-  #   environment:
-  #     PMA_HOST: sql
-  #     PMA_USER: root
-  #     PMA_PASSWORD: password
-  #   ports:
-  #     - '8080:80'
-  #   depends_on:
-  #     - sql
-  #   networks:
-  #     - app-network
-
-  # admin:
-  #   image: phpmyadmin:fpm-alpine
-  #   container_name: admin
-  #   restart: unless-stopped
-  #   environment:
-  #     - PMA_HOST=sql
-  #     - PMA_USER=root
-  #     - PMA_PORT=3306
-  #     - PMA_PASSWORD=password
-  #     - PMA_ABSOLUTE_URI=http://localhost/admin
-  #     - PMA_ARBITRARY=1
-  #   ports:
-  #     - '8080:80'
-  #   depends_on:
-  #     - sql
-  #   networks:
-  #     - app-network
+      backend:
+      traefik-proxy:
+        aliases:
+          - test.sql.docker
 
 
-volumes:
-  data:
+  dbadmin:
+    container_name: db_admin
+    image: adminer:latest
+    depends_on:
+      - sql
+    environment:
+      ADMINER_DEFAULT_DB_HOST: sql
+      ADMINER_DEFAULT_DB_NAME: osprey
 
-networks:
-  app-network:
+    networks:
+      - traefik-proxy
+      - backend
+
+    # Traefik Stuff
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-proxy
+      - traefik.http.routers.osprey-dba.rule=Host(`dba.localhost`)
+
+
 

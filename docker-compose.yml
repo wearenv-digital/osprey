@@ -111,6 +111,9 @@ services:
     image: adminer:latest
     depends_on:
       - sql
+    environment:
+      ADMINER_DEFAULT_DB_HOST: sql
+      ADMINER_DEFAULT_DB_NAME: osprey
     networks:
       - traefik-proxy
       - backend

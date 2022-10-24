@@ -47,18 +47,21 @@ router.get('/product-page/:product_code', async (req, res) => {
 		elecPhys = await controllers.getElecPhys(req);
 		description = await controllers.getDesc(req);
 
+
 		camFeatures = controllers.removeFirst(camFeatures);
 		camSpecs = controllers.removeFirst(camSpecs);
 		audioVideo = controllers.removeFirst(audioVideo);
 		automation = controllers.removeFirst(automation);
 		elecPhys = controllers.removeFirst(elecPhys);
 
+		var description = description[0];
 		camInfo = camInfo[0];
 		camFeatures = camFeatures[0];
 		camSpecs = camSpecs[0];
 		audioVideo = audioVideo[0];
 		automation = automation[0];
 		elecPhys = elecPhys[0];
+
 
 		var allInfoKeys = controllers.listAllKeys(camInfo);
 		var allFeatureKeys = controllers.listAllKeys(camFeatures);
@@ -430,9 +433,6 @@ router.get('/products/cctv/security-management-software', (req, res) => {
 router.get('/marine-categories', (req, res) => {
 	res.render('marine-categories');
 });
-
-
-
 
 //
 //
