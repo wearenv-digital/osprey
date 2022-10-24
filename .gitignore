@@ -1,7 +1,7 @@
 # Defined Ignore
 .env
 
-./src/sql/mysql/*
+./src/sql/mysql/
 
 # Logs
 logs
