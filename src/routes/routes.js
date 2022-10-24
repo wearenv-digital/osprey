@@ -12,13 +12,12 @@ router.use(function timeLog(req, res, next) {
 	next();
 });
 
-router.get('/', (req, res){
+router.get('/', (req, res) => {
 	res.render('index', {
 		title: 'Page Title',
 		breadcrumbs: req.breadcrumbs
-	})
-})
-
+	});
+});
 
 router.get('/product-page', async (req, res) => {
 	try {
