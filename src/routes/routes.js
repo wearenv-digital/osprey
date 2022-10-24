@@ -12,9 +12,13 @@ router.use(function timeLog(req, res, next) {
 	next();
 });
 
-router.get('/', (req, res) => {
-	res.render('index.ejs');
-});
+router.get('/', (req, res){
+	res.render('index', {
+		title: 'Page Title',
+		breadcrumbs: req.breadcrumbs
+	})
+})
+
 
 router.get('/product-page', async (req, res) => {
 	try {
@@ -56,7 +60,6 @@ router.get('/product-page/:product_code', async (req, res) => {
 		audioVideo = audioVideo[0];
 		automation = automation[0];
 		elecPhys = elecPhys[0];
-
 
 		var allInfoKeys = controllers.listAllKeys(camInfo);
 		var allFeatureKeys = controllers.listAllKeys(camFeatures);
@@ -205,8 +208,6 @@ router.get('/product-page/:product_code', async (req, res) => {
 			}
 			return prev;
 		}, []);
-
-
 
 		// Get good specs values by comparing to deadVals
 		newSpecsVals = allSpecsVals.reduce(function (prev, value) {

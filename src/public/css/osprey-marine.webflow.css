@@ -185,6 +185,12 @@ ul.nested-features-list-no-style>li {
 		box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .06)
 	}
 
+	.breadcrumbs {
+		width: 100%;
+		height: 40px !important;
+		border: 2px solid red
+	}
+
 	.category-section {
 		padding: 100px 5%
 	}
@@ -4788,7 +4794,7 @@ td.val-data {
 }
 
 .section-4 {
-	padding-top: 170px;
+	padding-top: 44px;
 	-webkit-box-orient: vertical;
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
