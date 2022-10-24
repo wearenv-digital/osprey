@@ -26,7 +26,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
       - traefik.http.routers.node-app.rule=Host(`3.11.230.233`)
-      - traefik.hhtp.services.node-app.loadbalancer.server.port=3030
+      - traefik.http.services.node-app.loadbalancer.server.port=3030
     networks:
       - traefik-proxy
     volumes:
@@ -47,7 +47,7 @@ services:
       - traefik.http.routers.apache.entrypoints=web
       - traefik.port=80
     volumes:
-      - ./apache/conf/httpd.conf:/conf/httpd.conf
+      # - ./apache/conf/httpd.conf:/conf/httpd.conf
     networks:
       - traefik-proxy
       - backend
