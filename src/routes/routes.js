@@ -425,6 +425,15 @@ router.get('/products/cctv/security-management-software', (req, res) => {
 	res.render('management-software');
 });
 
+//  Marine Category Route
+
+router.get('/marine-categories', (req, res) => {
+	res.render('marine-categories');
+});
+
+
+
+
 //
 //
 //

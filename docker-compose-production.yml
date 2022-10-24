@@ -33,24 +33,24 @@ services:
       - ./src:/app/src:ro
       - ./winston_logs/:/app/winston_logs/
 
-  # webserver:
-  #   container_name: webserver
-  #   image: httpd:latest
-  #   ports:
-  #     - 8080:80
+  webserver:
+    container_name: webserver
+    image: httpd:latest
+    ports:
+      - 8080:80
 
-  #   # Traefik Stuff
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.docker.network=traefik-proxy
-  #     - traefik.http.routers.apache.rule=Host(`apache.docker`)
-  #     - traefik.http.routers.apache.entrypoints=web
-  #     - traefik.port=80
-  #   volumes:
-  #     - ./apache/conf/httpd.conf:/conf/httpd.conf
-  #   networks:
-  #     - traefik-proxy
-  #     - backend
+    # Traefik Stuff
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-proxy
+      - traefik.http.routers.apache.rule=Host(`apache.docker`)
+      - traefik.http.routers.apache.entrypoints=web
+      - traefik.port=80
+    volumes:
+      - ./apache/conf/httpd.conf:/conf/httpd.conf
+    networks:
+      - traefik-proxy
+      - backend
 
 # for production
 # make sure traefik.toml IS NOT INSECURE
@@ -77,22 +77,6 @@ services:
       - traefik.port=8080
     networks:
       - traefik-proxy
-
-  # sshtunnel:
-  #   restart: always
-  #   image: ghcr.io/linuxserver/openssh-server
-  #   container_name: sshtunnel
-  #   ports:
-  #     - 2222:2222
-  #   volumes:
-  #     - ~/.ssh/docker-ssh-2.pub:/etc/tunnel/docker-ssh-2.pub
-  #     - ./openssh/sshd_config:/config/ssh_host_keys/sshd_config
-  #   environment:
-  #     - PUBLIC_KEY_FILE=/etc/tunnel/docker-ssh-2.pub
-  #     - USER_NAME=proxy
-  #     - SUDO_ACCESS=true
-  #   networks:
-  #     - traefik-proxy
 
   sql:
     build: ./src/sql/
