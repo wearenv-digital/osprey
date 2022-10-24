@@ -92,7 +92,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./src/sql/mysql/:/var/lib/mysql/
+      - ./src/sql/mysql/osprey:/var/lib/mysql/osprey
       - ./src/sql/logs:/var/log/*
     networks:
       backend:
