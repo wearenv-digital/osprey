@@ -47,7 +47,7 @@ services:
       - traefik.http.routers.apache.entrypoints=web
       - traefik.port=80
     volumes:
-      # - ./apache/conf/httpd.conf:/conf/httpd.conf
+      - ./apache/conf/httpd.conf:/conf/httpd.conf
     networks:
       - traefik-proxy
       - backend
