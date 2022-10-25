@@ -1,23 +1,32 @@
 version: '3.7'
 
+volumes:
+  data:
+
+networks:
+  traefik-proxy:
+    name: traefik-proxy
+  backend:
+
+
 services:
 
   node-app:
-    container_name: node-app-osprey
+    container_name: node-app
     build:
       context: .
       args:
         NODE_ENV: development
     environment:
       - NODE_ENV=development
-    command: npm run dev
+    command: node server.js
 
     # Traefik Stuff
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
-      - traefik.http.routers.node-app.rule=Host(`localhost`)
-      - traefik.hhtp.services.node-app.loadbalancer.server.port=3030
+      - traefik.http.routers.node-app.rule=Host(`3.11.230.233`)
+      - traefik.http.services.node-app.loadbalancer.server.port=3030
     networks:
       - traefik-proxy
     volumes:
@@ -38,8 +47,7 @@ services:
       - traefik.http.routers.apache.entrypoints=web
       - traefik.port=80
     volumes:
-      - ./apache/conf/httpd.conf:/conf/httpd.conf
-      - ./apache/conf/httpd-prod.conf:/httpd-prod.conf
+      - ./apache/httpd.conf:/conf/httpd.conf
     networks:
       - traefik-proxy
       - backend
@@ -55,7 +63,7 @@ services:
       - 8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik/traefik.toml:/etc/traefik/traefik.toml
+      - ./traefik/:/etc/traefik/
 
     # Traefik Stuff
     labels:
@@ -64,31 +72,18 @@ services:
       - traefik.http.routers.api.rule=Host(`monitor.docker`)
       - traefik.http.routers.api.entrypoints=web
       - traefik.http.routers.api.service=api@internal
-      - traefik.port=8080"
+      - traefik.http.routers.traefik.rule=Host(`3.11.230.233`)
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.port=8080
     networks:
       - traefik-proxy
 
-  # sshtunnel:
-  #   restart: always
-  #   image: ghcr.io/linuxserver/openssh-server
-  #   container_name: sshtunnel
-  #   ports:
-  #     - 2222:2222
-  #   volumes:
-  #     - ~/.ssh/docker-ssh-2.pub:/etc/tunnel/docker-ssh-2.pub
-  #     - ./openssh/sshd_config:/config/ssh_host_keys/sshd_config
-  #   environment:
-  #     - PUBLIC_KEY_FILE=/etc/tunnel/docker-ssh-2.pub
-  #     - USER_NAME=proxy
-  #     - SUDO_ACCESS=true
-  #   networks:
-  #     - traefik-proxy
-
   sql:
     build: ./src/sql/
+    # user: "1000:50"
     container_name: sql
     restart: unless-stopped
-    command: mysqld --general-log=1 --general-log-file=/var/lib/mysql/general-log.log --max_allowed_packet=1073741824
+    command: mysqld --general-log=1 --general-log-file=/var/lib/mysql/general-log.log --max_allowed_packet=1073741824 --lower_case_table_names=1
     environment:
       MYSQL_DATABASE: 'osprey'
       MYSQL_USER: 'user'
@@ -97,7 +92,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./src/sql/mysql:/var/lib/mysql
+      - ./src/sql/mysql/:/var/lib/mysql/
       - ./src/sql/logs:/var/log/*
     networks:
       backend:
@@ -114,6 +109,7 @@ services:
     environment:
       ADMINER_DEFAULT_DB_HOST: sql
       ADMINER_DEFAULT_DB_NAME: osprey
+
     networks:
       - traefik-proxy
       - backend
@@ -124,12 +120,5 @@ services:
       - traefik.docker.network=traefik-proxy
       - traefik.http.routers.osprey-dba.rule=Host(`dba.localhost`)
 
-volumes:
-  data:
-
-networks:
-  traefik-proxy:
-    name: traefik-proxy
-  backend:
 
 

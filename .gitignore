@@ -1,8 +1,6 @@
 # Defined Ignore
 .env
 
-
-docker-compose.yml
 src/sql/mysql*
 src/sql/mysql
 src/sql/mysql/*

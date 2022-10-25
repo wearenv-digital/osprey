@@ -111,8 +111,9 @@ services:
       ADMINER_DEFAULT_DB_NAME: osprey
 
     networks:
-      - traefik-proxy
-      - backend
+      traefik-proxy:
+        external: true
+      backend:
 
     # Traefik Stuff
     labels:
