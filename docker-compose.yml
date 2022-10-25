@@ -20,8 +20,6 @@ services:
     environment:
       - NODE_ENV=development
     command: node server.js
-
-    # Traefik Stuff
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
@@ -33,13 +31,12 @@ services:
       - ./src:/app/src:ro
       - ./winston_logs/:/app/winston_logs/
 
+
   webserver:
     container_name: webserver
     image: httpd:latest
     ports:
       - 8080:80
-
-    # Traefik Stuff
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
@@ -64,10 +61,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/:/etc/traefik/
-
-    # Traefik Stuff
     labels:
       - traefik.enable=true
+      - api.insecure=true
       - traefik.docker.network=traefik-proxy
       - traefik.http.routers.api.rule=Host(`monitor.docker`)
       - traefik.http.routers.api.entrypoints=web
@@ -109,12 +105,9 @@ services:
     environment:
       ADMINER_DEFAULT_DB_HOST: sql
       ADMINER_DEFAULT_DB_NAME: osprey
-
     networks:
       - traefik-proxy
       - backend
-
-    # Traefik Stuff
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
