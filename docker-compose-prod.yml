@@ -47,7 +47,7 @@ services:
       - traefik.http.routers.apache.entrypoints=web
       - traefik.port=80
     volumes:
-      - ./apache/conf/httpd.conf:/conf/httpd.conf
+      - ./apache/httpd.conf:/conf/httpd.conf
     networks:
       - traefik-proxy
       - backend
@@ -92,7 +92,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      # - ./src/sql/mysql/osprey:/var/lib/mysql/osprey
+      - ./src/sql/mysql/:/var/lib/mysql/
       - ./src/sql/logs:/var/log/*
     networks:
       backend:
