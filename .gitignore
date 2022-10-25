@@ -1,8 +1,11 @@
 # Defined Ignore
 .env
 
-# ./src/sql/mysql/
 
+docker-compose.yml
+src/sql/mysql*
+src/sql/mysql
+src/sql/mysql/*
 # Logs
 logs
 *.log
