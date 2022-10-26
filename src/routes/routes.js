@@ -1,11 +1,6 @@
 const express = require('express');
 var router = express.Router();
-// const processing = require('../controller/processing');
-// const db = require('../controller/dbConnector');
 const controllers = require('../controller/controllers');
-// var logger = require('../services/logger');
-// const path = require('path');
-// const { features } = require('process');
 
 router.use(function timeLog(req, res, next) {
 	console.log('Time: ', Date.now());
@@ -18,6 +13,14 @@ router.get('/', (req, res) => {
 		breadcrumbs: req.breadcrumbs
 	});
 });
+
+router.get('/data-test', async (req, res) => {
+	let results = await controllers.getNames();
+	// throw new Error("error");
+	res.json(results);
+});
+
+
 
 router.get('/product-page', async (req, res) => {
 	try {
@@ -47,7 +50,6 @@ router.get('/product-page/:product_code', async (req, res) => {
 		elecPhys = await controllers.getElecPhys(req);
 		description = await controllers.getDesc(req);
 
-
 		camFeatures = controllers.removeFirst(camFeatures);
 		camSpecs = controllers.removeFirst(camSpecs);
 		audioVideo = controllers.removeFirst(audioVideo);
@@ -61,7 +63,6 @@ router.get('/product-page/:product_code', async (req, res) => {
 		audioVideo = audioVideo[0];
 		automation = automation[0];
 		elecPhys = elecPhys[0];
-
 
 		var allInfoKeys = controllers.listAllKeys(camInfo);
 		var allFeatureKeys = controllers.listAllKeys(camFeatures);
@@ -433,8 +434,6 @@ router.get('/products/cctv/security-management-software', (req, res) => {
 router.get('/marine-categories', (req, res) => {
 	res.render('marine-categories');
 });
-
-
 
 //
 //

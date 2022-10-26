@@ -2,11 +2,12 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 // if (!process.env.NODE_ENV === 'development') { };
+// if testing locally on the mac. comment out password line other it forces a password
 
 const pool = mysql.createPool({
-	host: 'sql',
+	host: process.env.HOST || 'sql',
 	user: 'root',
-	password: 'password',
+	password: process.env.PASSWORD || 'password',
 	database: 'osprey',
 	connectionLimit: 10
 });
@@ -14,9 +15,9 @@ const pool = mysql.createPool({
 let dbResults = {};
 // const sqlQuery = `SELECT * FROM cam_info`;
 
-dbResults.all = () => {
+dbResults.all = sqlQuery => {
 	return new Promise((resolve, reject) => {
-		const sqlQuery = `SELECT * FROM cam_info`;
+		// const sqlQuery = `SELECT * FROM cam_info`;
 
 		pool.query(sqlQuery, (err, results) => {
 			if (err) {
@@ -30,8 +31,6 @@ dbResults.all = () => {
 // LETS TRY AND MAKE THIS REUSABLE
 dbResults.id = (sqlQuery, params) => {
 	return new Promise((resolve, reject) => {
-		// const sqlQuery = `SELECT * FROM cam_info WHERE product_code = ?`;
-
 		pool.query(sqlQuery, params, (err, results) => {
 			if (err) {
 				return reject(err);
@@ -40,7 +39,6 @@ dbResults.id = (sqlQuery, params) => {
 		});
 	});
 };
-
 
 // dbResults.id('SELECT * FROM cam_info WHERE product_code =?', [req.params.product_code])
 

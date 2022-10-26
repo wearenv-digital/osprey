@@ -10,6 +10,7 @@ RUN if [ "$NODE_ENV" = "development" ]; \
 	then npm install; \
 	else npm install --only=production; \
 	fi
+RUN npm install -g nodemon
 
 COPY . ./
 ENV PORT 3030

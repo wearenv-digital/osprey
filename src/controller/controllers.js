@@ -16,10 +16,9 @@ function removeProdCode(arr) {
 }
 
 function removeFirst(obj) {
-delete obj[0].product_code;
+	delete obj[0].product_code;
 	return obj;
 }
-
 
 function filterDead(obj) {
 	deadKeys = Object.keys(obj).filter(
@@ -52,8 +51,6 @@ async function getAll() {
 		return results;
 	} catch (e) {
 		console.log(e);
-		const status = 500;
-		return status;
 	}
 }
 
@@ -63,13 +60,23 @@ var audioVideo = {};
 var automation = {};
 var elecPhys = {};
 
+async function getNames() {
+	try {
+		let results = await db.all('SELECT product_name FROM cam_info;');
+		return results;
+	} catch (e) {
+		return console.log(e);
+	}
+}
+
 // THIS NEEDS WORK
 
 async function getDesc(req) {
 	try {
-		results = await db.id('SELECT description FROM cam_info WHERE product_code = ?', [
-			req.params.product_code
-		]);
+		results = await db.id(
+			'SELECT description FROM cam_info WHERE product_code = ?',
+			[req.params.product_code]
+		);
 		return results;
 	} catch (e) {
 		console.log(e);
@@ -171,5 +178,6 @@ module.exports = {
 	getCamSpecs,
 	getAudioVideo,
 	getAutomation,
-	getElecPhys
+	getElecPhys,
+	getNames
 };
