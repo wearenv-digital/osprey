@@ -2905,7 +2905,8 @@ td.val-data {
 
 .upper-head {
 	margin-bottom: 10px;
-	font-family: neuropol;
+	/* font-family: neuropol; */
+	font-family: Avenir, sans-serif;
 	color: #31353d;
 	font-size: 12px;
 	font-weight: 800;
@@ -2921,7 +2922,8 @@ td.val-data {
 .section-title {
 	margin-top: 15px;
 	margin-bottom: 15px;
-	font-family: neuropol;
+	/* font-family: neuropol; */
+	font-family: Avenir, sans-serif;
 	color: #1b70a9;
 	font-size: 34px;
 	line-height: 44px;
@@ -2953,7 +2955,8 @@ td.val-data {
 .centred-cta {
 	margin-top: 0;
 	padding: 20px;
-	font-family: neuropol;
+	/* font-family: neuropol; */
+	font-family: Avenir, sans-serif;
 	color: #093273;
 	font-size: 18px;
 	line-height: 20px;
@@ -3115,7 +3118,8 @@ td.val-data {
 .headline-2 {
 	margin-top: 0;
 	margin-bottom: 0;
-	font-family: neuropol;
+	/* font-family: neuropol; */
+	font-family: Avenir, sans-serif;
 	color: #fff;
 	font-size: 77px;
 	line-height: 82px
@@ -3132,7 +3136,8 @@ td.val-data {
 
 .subhead-2 {
 	width: 70%;
-	font-family: neuropol;
+	/* font-family: neuropol; */
+	font-family: Avenir, sans-serif;
 	color: rgba(243, 251, 255, .92);
 	font-size: 20px;
 	line-height: 26px;
@@ -3152,7 +3157,8 @@ td.val-data {
 	padding: 18px 25px;
 	border-radius: 4px;
 	background-color: #0baa82;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	font-size: 18px;
 	font-weight: 600
 }
@@ -3355,7 +3361,8 @@ td.val-data {
 
 .amenity-title {
 	margin-top: 21px;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #fff;
 	font-size: 18px;
 	line-height: 24px;
@@ -3364,7 +3371,8 @@ td.val-data {
 
 .amenity-title.dark,
 .amenity-title.light {
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	font-weight: 500
 }
 
@@ -3741,14 +3749,16 @@ td.val-data {
 .category-name {
 	margin-top: 10px;
 	margin-bottom: 2px;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #093273;
 	font-size: 16px;
 	font-weight: 500
 }
 
 .category-info {
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #ba770f
 }
 
@@ -3817,7 +3827,8 @@ td.val-data {
 	-webkit-flex: 0 0 auto;
 	-ms-flex: 0 0 auto;
 	flex: 0 0 auto;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: rgba(255, 255, 255, .12);
 	font-size: 58px;
 	line-height: 34px;
@@ -3826,7 +3837,8 @@ td.val-data {
 
 .hiw-number.darker {
 	opacity: 1;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: orange;
 	font-size: 72px
 }
@@ -3838,7 +3850,8 @@ td.val-data {
 
 .paragraph-light {
 	margin: 10px 0 0;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #b7cfcd;
 	font-size: 16px;
 	font-weight: 300
@@ -3879,7 +3892,8 @@ td.val-data {
 	margin-bottom: 4px;
 	margin-left: 0;
 	opacity: .85;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #0b3646;
 	font-size: 15px;
 	line-height: 22px;
@@ -3948,7 +3962,8 @@ td.val-data {
 
 .footer-text---lighter-2 {
 	display: inline-block;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #093273;
 	font-size: 14px;
 	line-height: 22px;
@@ -3986,7 +4001,8 @@ td.val-data {
 	-webkit-justify-content: flex-start;
 	-ms-flex-pack: start;
 	justify-content: flex-start;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #313b53;
 	font-size: 15px
 }
@@ -4101,7 +4117,8 @@ td.val-data {
 
 .amenity-title-2 {
 	margin-top: 15px;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #cce6e3;
 	font-size: 17px;
 	line-height: 24px;
@@ -4216,7 +4233,8 @@ td.val-data {
 	padding: 14px 35px;
 	border-radius: 200px;
 	background-color: #ba770f;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #fff;
 	font-size: 12px;
 	font-weight: 600;
@@ -4232,7 +4250,8 @@ td.val-data {
 	padding: 65px 30px;
 	border-radius: 4px;
 	background-color: #10a76b;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #fff;
 	font-size: 18px;
 	line-height: 24px;
@@ -4261,7 +4280,8 @@ td.val-data {
 	width: 70%;
 	margin-right: auto;
 	margin-left: auto;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: rgba(255, 255, 255, .97);
 	font-size: 20px;
 	line-height: 26px;
@@ -4335,7 +4355,8 @@ td.val-data {
 	display: -ms-flexbox;
 	display: flex;
 	margin-top: 2px;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #102c38;
 	font-size: 36px;
 	line-height: 38px;
@@ -4423,7 +4444,8 @@ td.val-data {
 }
 
 .paragraph {
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #556f80;
 	font-size: 17px;
 	line-height: 24px;
@@ -4440,7 +4462,8 @@ td.val-data {
 	margin-top: 30px;
 	margin-bottom: 5px;
 	padding-left: 0;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #363a3d;
 	font-size: 16px;
 	font-weight: 600;
@@ -4451,7 +4474,8 @@ td.val-data {
 	margin-top: 0;
 	margin-right: 0;
 	margin-left: 0;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #18394c;
 	font-size: 17px;
 	line-height: 21px;
@@ -4537,7 +4561,8 @@ td.val-data {
 	margin-bottom: 0;
 	margin-left: 20px;
 	opacity: .85;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #1b70a9;
 	font-size: 15px;
 	line-height: 22px;
@@ -4581,7 +4606,8 @@ td.val-data {
 	margin-bottom: 0;
 	padding-bottom: 5px;
 	border-bottom: 1px none #d9e1e6;
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #293b46;
 	font-size: 26px;
 	line-height: 38px;
@@ -4591,7 +4617,8 @@ td.val-data {
 }
 
 .paragraph-2 {
-	font-family: neuropol, sans-serif;
+	/* font-family: neuropol, sans-serif; */
+	font-family: Avenir, sans-serif;
 	color: #4d6472;
 	font-size: 16px;
 	line-height: 24px;
@@ -4642,7 +4669,8 @@ td.val-data {
 
 .text-block,
 .titleserv {
-	font-family: neuropol, sans-serif
+	/* font-family: neuropol, sans-serif */
+	font-family: Avenir, sans-serif;
 }
 
 .titleserv {

@@ -32,22 +32,22 @@ services:
       - ./winston_logs/:/app/winston_logs/
 
 
-  webserver:
-    container_name: webserver
-    image: httpd:latest
-    ports:
-      - 8080:80
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=traefik-proxy
-      - traefik.http.routers.apache.rule=Host(`apache.docker`)
-      - traefik.http.routers.apache.entrypoints=web
-      - traefik.port=80
-    volumes:
-      - ./apache/httpd.conf:/conf/httpd.conf
-    networks:
-      - traefik-proxy
-      - backend
+  # webserver:
+  #   container_name: webserver
+  #   image: httpd:latest
+  #   ports:
+  #     - 8080:80
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.docker.network=traefik-proxy
+  #     - traefik.http.routers.apache.rule=Host(`apache.docker`)
+  #     - traefik.http.routers.apache.entrypoints=web
+  #     - traefik.port=80
+  #   volumes:
+  #     - ./apache/httpd.conf:/conf/httpd.conf
+  #   networks:
+  #     - traefik-proxy
+  #     - backend
 
 # for production
 # make sure traefik.toml IS NOT INSECURE
