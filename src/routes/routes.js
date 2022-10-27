@@ -15,12 +15,21 @@ router.get('/', (req, res) => {
 });
 
 router.get('/data-test', async (req, res) => {
-	let results = await controllers.getNames();
+	let results = {};
+	let nameArray = [];
+	results = await controllers.getNames();
+	// res.send(results);
 	// throw new Error("error");
-	res.json(results);
+
+	results.forEach(element => {
+		nameArray.push(Object.values(element));
+	});
+	// res.send(nameArray);
+
+	res.render('test-product-list', {
+		data: nameArray
+	});
 });
-
-
 
 router.get('/product-page', async (req, res) => {
 	try {

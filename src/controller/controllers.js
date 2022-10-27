@@ -62,7 +62,7 @@ var elecPhys = {};
 
 async function getNames() {
 	try {
-		let results = await db.all('SELECT product_name FROM cam_info;');
+		let results = await db.all('SELECT product_name, product_code FROM cam_info;');
 		return results;
 	} catch (e) {
 		return console.log(e);
