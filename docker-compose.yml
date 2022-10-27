@@ -19,7 +19,7 @@ services:
         NODE_ENV: development
     environment:
       - NODE_ENV=development
-    # command: nodemon server.js
+    command: npm run dev
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy

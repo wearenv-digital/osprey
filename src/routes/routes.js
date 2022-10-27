@@ -15,19 +15,33 @@ router.get('/', (req, res) => {
 });
 
 router.get('/data-test', async (req, res) => {
-	let results = {};
+	let results;
 	let nameArray = [];
+	let codeArray = [];
+	let newObj = {};
+
 	results = await controllers.getNames();
 	// res.send(results);
-	// throw new Error("error");
 
+	//  dont lose //
+	let newArr = [];
 	results.forEach(element => {
-		nameArray.push(Object.values(element));
+		nameArray.push(element.product_name);
+		codeArray.push(element.product_code);
+		newObj.name = nameArray;
+		newObj.code = codeArray;
 	});
+	newArr[1] = newArr.push(newObj);
+	newArr.push(nameArray);
+	newArr.push(codeArray)
+
+	// res.send(newArr);
+	// return;
+
 	// res.send(nameArray);
 
 	res.render('test-product-list', {
-		data: nameArray
+		data: newArr
 	});
 });
 

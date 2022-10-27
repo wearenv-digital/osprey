@@ -4,13 +4,21 @@
 	</div>
 	<div class="list-container">
 		<ul style="list-style: None" class="list">
-			<% data.forEach(function(el){ %>
-				<li>
-					<a href="">
-						<%= el %>
-					</a>
-				</li>
-				<% }); %>
+			<% let prodName; %>
+				<% let prodCode; %>
+					<% data.forEach(function(el){ %>
+						<% data[2].forEach(function(element){ %>
+							<% prodName=element; %>
+								<% }) %>
+									<% data[3].forEach(function (element){ %>
+										<% prodCode=element; %>
+											<% }) %>
+												<li>
+													<a href="<%= `/product-page/${prodCode}` %>" </a>
+														<%= prodName %>
+													</a>
+												</li>
+												<% }); %>
 		</ul>
 	</div>
 </div>
