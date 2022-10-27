@@ -22,6 +22,7 @@ router.get('/data-test', async (req, res) => {
 
 	results = await controllers.getNames();
 	// res.send(results);
+	// return
 
 	//  dont lose //
 	let newArr = [];
@@ -31,17 +32,12 @@ router.get('/data-test', async (req, res) => {
 		newObj.name = nameArray;
 		newObj.code = codeArray;
 	});
-	newArr[1] = newArr.push(newObj);
-	newArr.push(nameArray);
-	newArr.push(codeArray)
-
-	// res.send(newArr);
+	// res.send(newObj);
 	// return;
-
-	// res.send(nameArray);
+	// res.send(name[]Array);
 
 	res.render('test-product-list', {
-		data: newArr
+		data: results
 	});
 });
 
