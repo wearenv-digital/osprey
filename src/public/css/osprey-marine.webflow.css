@@ -8,6 +8,29 @@
 	}
 }
 
+/* Product Page Styling */
+
+
+
+h3.list-title {
+	padding-bottom: 22px;
+}
+
+ul.product-list {
+	list-style: none;
+}
+
+ul.product-list>li {
+	padding-bottom: 14px;
+	font-family: Avenir;
+	font-size: 18px;
+	font-weight: 500;
+}
+
+ul.product-list>li>a {
+	text-decoration: none;
+}
+
 th {
 	text-align: left
 }
@@ -6320,6 +6343,12 @@ html.w-mod-js [data-ix=fade-on-scroll-2] {
 	-webkit-transform: translate(0, 10px);
 	-ms-transform: translate(0, 10px);
 	transform: translate(0, 10px)
+}
+
+nav.nav-right-2.w-nav-menu>a>img.nav-logo {
+	padding-top: 14px;
+	padding-left: 6px;
+	width: 200px;
 }
 
 html.w-mod-js [data-ix=display-none] {

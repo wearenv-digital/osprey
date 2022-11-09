@@ -16,26 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/data-test', async (req, res) => {
 	let results;
-	let nameArray = [];
-	let codeArray = [];
-	let newObj = {};
-
 	results = await controllers.getNames();
-	// res.send(results);
-	// return
-
-	//  dont lose //
-	let newArr = [];
-	results.forEach(element => {
-		nameArray.push(element.product_name);
-		codeArray.push(element.product_code);
-		newObj.name = nameArray;
-		newObj.code = codeArray;
-	});
-	// res.send(newObj);
-	// return;
-	// res.send(name[]Array);
-
 	res.render('test-product-list', {
 		data: results
 	});
