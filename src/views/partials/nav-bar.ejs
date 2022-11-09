@@ -93,19 +93,19 @@
 	<nav style="display: none" class="breadcrumb-nav">
 		<ol class="breadcrumb" aria-label="breadcrumb">
 			<% if(breadcrumb) { %>
-				<% for(var i=0; i< breadcrumb.lengt; i++ ) %>
-					<% if (i===(breadcrumb.length -1)) { %>
+				<% for(var i=0; i< breadcrumb.length; i++ ) %>
+					<% if (i=== (breadcrumb.length -1)) { %>
 						<li itemscope itemtype="https://schema.org/BreadcrumbList">
 							<a href="<%- this.url %>" itemprop="url">
 								<span itemprop="title">
-									<%- this.label %>
+									<%= this.label %>
 								</span></a>
 						</li>
-						<%} else { %>
+						<% } else { %>
 							<li>
-								<%- this.label %>
+								<%= this.label %>
 							</li>
-							<%- } %>
+							<% } %>
 								<% } %>
 		</ol>
 	</nav>
