@@ -90,11 +90,24 @@
 		</div>
 	</nav>
 	<!-- breadcrumbs -->
-	<nav style="display: none" class="breadcrumb-nav" aria-label="breadcrumb">
-		<ul class="breadcrumb-ul">
-			<li class="breadcrumb-item"><a href="/"></a> Home </li>
-			<li class="bredcrumb-item active" aria-current="page"></li>
-		</ul>
+	<nav style="display: none" class="breadcrumb-nav">
+		<ol class="breadcrumb" aria-label="breadcrumb">
+			<% if(breadcrumb) { %>
+				<% for(var i=0; i< breadcrumb.lengt; i++ ) %>
+					<% if (i===(breadcrumb.length -1)) { %>
+						<li itemscope itemtype="https://schema.org/BreadcrumbList">
+							<a href="<%- this.url %>" itemprop="url">
+								<span itemprop="title">
+									<%- this.label %>
+								</span></a>
+						</li>
+						<%} else { %>
+							<li>
+								<%- this.label %>
+							</li>
+							<%- } %>
+								<% } %>
+		</ol>
 	</nav>
 	<!-- breadcrumbs finish -->
 	<div class="menu-button w-nav-button">

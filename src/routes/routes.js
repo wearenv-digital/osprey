@@ -7,6 +7,10 @@ router.use(function timeLog(req, res, next) {
 	next();
 });
 
+// router.use(function (req, res, next) {
+// 	req.local._url = req.url
+// });
+
 router.get('/', (req, res) => {
 	res.render('index', {
 		title: 'Page Title',
@@ -14,13 +18,18 @@ router.get('/', (req, res) => {
 	});
 });
 
+router.get('/breadcrumb-test/level1/level2/you-are-here',(req, res) => {
+	res.render('breadcrumb-test')
+})
+
 router.get('/data-test', async (req, res) => {
 	let results;
 	results = await controllers.getNames();
-	res.render('test-product-list', {
+	res.send('test-product-list', {
 		data: results
 	});
 });
+
 
 router.get('/product-page', async (req, res) => {
 	try {
