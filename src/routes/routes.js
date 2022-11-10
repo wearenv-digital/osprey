@@ -1,26 +1,49 @@
 const express = require('express');
-var router = express.Router();
 const controllers = require('../controller/controllers');
+const breadcrumbs = require('express-breadcrumbs');
+const router = express.Router();
 
 router.use(function timeLog(req, res, next) {
 	console.log('Time: ', Date.now());
 	next();
 });
 
+router.use(breadcrumbs.init());
+router.use(breadcrumbs.setHome());
+
+const breadcrumbSplit = (req, res, next) => {
+	Object.assign(req.state, { breadcrumbs: req.path.split('/') });
+	next();
+};
+
+router.use(
+	'/',
+	breadcrumbs.setHome({
+		name: 'Home',
+		url: '/'
+	})
+);
+
 // router.use(function (req, res, next) {
 // 	req.local._url = req.url
 // });
 
 router.get('/', (req, res) => {
-	res.render('index', {
-		title: 'Page Title',
-		breadcrumbs: req.breadcrumbs
+	res.render('index');
+});
+
+router.get('/crumb-test/level1/level2/here', (req, res) => {
+	res.send({
+		breadcrumbs: breadcrumbSplit
 	});
 });
 
-router.get('/breadcrumb-test/level1/level2/you-are-here',(req, res) => {
-	res.render('breadcrumb-test')
-})
+router.get('/breadcrumb-test/level1/level2/you-are-here', (req, res) => {
+	req.breadcrumbs('/breadcrumb-test/level1/level2/you-are-here');
+	res.render('breadcrumb-test', {
+		breadcrumbs: breadcrumbSplit
+	});
+});
 
 router.get('/data-test', async (req, res) => {
 	let results;
@@ -29,7 +52,6 @@ router.get('/data-test', async (req, res) => {
 		data: results
 	});
 });
-
 
 router.get('/product-page', async (req, res) => {
 	try {

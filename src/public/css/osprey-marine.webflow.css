@@ -4361,6 +4361,10 @@ td.val-data {
 	background: linear-gradient(0deg, rgba(27, 112, 169, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
+nav.breadcrumb-nav > ul > li {
+	display: inline-block;
+}
+
 .brand-div,
 .brand-div.w--current {
 	-webkit-box-align: center;
