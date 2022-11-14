@@ -2896,7 +2896,7 @@ td.val-data {
 .nav-link {
 	margin: 1px 10px 0;
 	padding: 0;
-	font-family: neuropol;
+	font-family: Avenir;
 	font-size: 15px;
 	line-height: 15px;
 	font-weight: 600;
@@ -4361,7 +4361,7 @@ td.val-data {
 	background: linear-gradient(0deg, rgba(27, 112, 169, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
-nav.breadcrumb-nav > ul > li {
+nav.breadcrumb-nav>ul>li {
 	display: inline-block;
 }
 
@@ -6025,7 +6025,6 @@ nav.breadcrumb-nav > ul > li {
 }
 
 .dropdown-list.w--open {
-	max-width: 150%;
 	min-width: 100%;
 	margin-top: 15px;
 	background-color: #fff

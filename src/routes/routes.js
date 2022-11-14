@@ -48,7 +48,7 @@ router.get('/breadcrumb-test/level1/level2/you-are-here', (req, res) => {
 router.get('/data-test', async (req, res) => {
 	let results;
 	results = await controllers.getNames();
-	res.send('test-product-list', {
+	res.render('test-product-list', {
 		data: results
 	});
 });
@@ -419,6 +419,10 @@ router.get('/security', (req, res) => {
 	res.render('security');
 });
 
+router.get('/hazardous-areas', (req, res) => {
+	res.render('hazardous-areas');
+});
+
 router.get('/product-category', (req, res) => {
 	res.render('product-category');
 });
@@ -485,12 +489,24 @@ router.get('/products/cctv/cameras/prison-cell', (req, res) => {
 	res.render('prison-cell');
 });
 
-router.get('/products/cctv/cameras/marine-cameras', (req, res) => {
-	res.render('marine-cameras');
+// Marine Camera Product Route
+router.get('/products/cctv/cameras/marine-cameras', async (req, res) => {
+	try {
+		var data = {};
+		var sqlQuery =
+			'SELECT product_name, product_code FROM cam_info WHERE category = "marine" ';
+		data = await controllers.getNamesQuery(sqlQuery);
+	} catch (error) {
+		consolee.log(error);
+	}
+	
+	res.render('marine-cameras', {
+		data: data
+	});
 });
 
-router.get('/products/cctv/cameras/hazardous-enviornment', (req, res) => {
-	res.render('hazardous-environment');
+router.get('/products/cctv/cameras/hazardous-environment', (req, res) => {
+	res.render('hazardous-areas');
 });
 
 router.get('/products/cctv/cameras/thermal-cameras', (req, res) => {

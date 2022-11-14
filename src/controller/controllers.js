@@ -45,7 +45,7 @@ function listAllVals(obj) {
 }
 
 // THIS WORKS
-async function getAll() {
+async function getAll(query) {
 	try {
 		let results = await db.all();
 		return results;
@@ -54,15 +54,24 @@ async function getAll() {
 	}
 }
 
-var camInfo = {};
-var camSpecs = {};
-var audioVideo = {};
-var automation = {};
-var elecPhys = {};
+// var camInfo = {};
+// var camSpecs = {};
+// var audioVideo = {};
+// var automation = {};
+// var elecPhys = {};
 
 async function getNames() {
 	try {
 		let results = await db.all('SELECT product_name, product_code FROM cam_info;');
+		return results;
+	} catch (e) {
+		return console.log(e);
+	}
+}
+
+async function getNamesQuery(sqlQuery) {
+	try {
+		let results = await db.all(sqlQuery);
 		return results;
 	} catch (e) {
 		return console.log(e);
@@ -179,5 +188,6 @@ module.exports = {
 	getAudioVideo,
 	getAutomation,
 	getElecPhys,
-	getNames
+	getNames,
+	getNamesQuery
 };
