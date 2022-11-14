@@ -32,7 +32,6 @@ services:
       - traefik-proxy
     volumes:
       - ./src:/app/src:ro
-      - ./winston_logs/:/app/winston_logs/
 
   webserver:
     container_name: webserver
@@ -119,7 +118,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik-proxy
-      - traefik.http.routers.osprey-dba.rule=Host(`dba.localhost`)
+      - traefik.http.routers.osprey-dba.rule=Host(`dba.3.11.230.233`)
 
 
 
