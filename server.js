@@ -1,7 +1,6 @@
 const express = require('express');
 require('dotenv').config();
 const bodyParser = require('body-parser');
-const { json } = require('body-parser');
 const path = require('path');
 const app = express();
 const breadcrumbs = require('express-breadcrumbs');
