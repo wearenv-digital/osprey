@@ -16,9 +16,9 @@ services:
     build:
       context: .
       args:
-        NODE_ENV: production
+        NODE_ENV: development
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     command: node server.js
 
     # Traefik Stuff

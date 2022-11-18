@@ -5,9 +5,9 @@ require('dotenv').config();
 // if testing locally on the mac. comment out password line other it forces a password
 
 const pool = mysql.createPool({
-	host: process.env.HOST || 'sql',
-	user: 'root',
-	password: process.env.PASSWORD || 'password',
+	host: process.env.DB_HOST || 'sql',
+	user: process.env.DB_USER || 'test',
+	password: process.env.DB_PASSWORD || 'password',
 	database: 'osprey',
 	connectionLimit: 10
 });

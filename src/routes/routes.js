@@ -392,8 +392,10 @@ router.get('/hazardous-areas', breadcrumbs.Middleware(), (req, res) => {
 	res.render('hazardous-areas', { breadcrumbs: req.breadcrumbs });
 });
 
-router.get('/product-category', (req, res) => {
-	res.render('product-category');
+router.get('/products', breadcrumbs.Middleware(), (req, res) => {
+	res.render('product-category', {
+		breadcrumbs: req.breadcrumbs
+	});
 });
 
 // CCTV categories
