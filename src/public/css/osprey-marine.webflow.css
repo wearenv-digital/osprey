@@ -18,13 +18,16 @@ h3.list-title {
 
 ul.product-list {
 	list-style: none;
+	padding: 20px 0
 }
 
 ul.product-list>li {
-	padding-bottom: 14px;
 	font-family: Avenir;
 	font-size: 18px;
 	font-weight: 500;
+	border-bottom: #0064b1 2px solid;
+	padding: 24px 0;
+	margin: 8px 0
 }
 
 ul.product-list>li>a {
@@ -4870,6 +4873,10 @@ nav.breadcrumb-nav>ul>li {
 	padding: 0 0 20px
 }
 
+.list-container {
+	max-width: 50%;
+}
+
 .list {
 	max-width: 100%;
 	margin-bottom: 0;
@@ -4905,11 +4912,23 @@ nav.breadcrumb-nav>ul>li {
 	margin-left: 20px
 }
 
+
 .list-item.space {
 	margin-right: 10px;
 	margin-left: 10px;
 	list-style-type: none
 }
+
+div.product-list-image-wrapper {
+	max-width: 150px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+img.product-list-image {}
+
 
 .tabs {
 	max-width: 90%;
@@ -5467,6 +5486,17 @@ nav.breadcrumb-nav>ul>li {
 	font-weight: 700
 }
 
+.search-input {
+	max-width: 80%
+}
+
+
+
+input.search-input:focus-visible {
+	outline: none !important;
+	-webkit-appearance: none !important;
+}
+
 .search-button:hover {
 	background-color: #093273
 }
@@ -5490,10 +5520,10 @@ nav.breadcrumb-nav>ul>li {
 	-webkit-box-pack: justify;
 	-webkit-justify-content: space-between;
 	-ms-flex-pack: justify;
-	justify-content: space-between;
-	-webkit-align-self: stretch;
-	-ms-flex-item-align: stretch;
-	align-self: stretch
+	justify-content: flex-end;
+	gap: 10px;
+	align-items: baseline;
+
 }
 
 .div-block-5 {
@@ -6144,7 +6174,6 @@ nav.breadcrumb-nav>ul>li {
 
 .div-block-62 {
 	max-width: 80%;
-	min-width: 80%;
 	-webkit-box-pack: start;
 	-webkit-justify-content: flex-start;
 	-ms-flex-pack: start;
@@ -7395,7 +7424,15 @@ html.w-mod-js [data-ix=display-none] {
 		margin-bottom: 10px
 	}
 
+	div.div-block-4.search-wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+
 	.search {
+		height: 100%;
 		-webkit-box-pack: center;
 		-webkit-justify-content: center;
 		-ms-flex-pack: center;
@@ -7408,6 +7445,13 @@ html.w-mod-js [data-ix=display-none] {
 
 	.search-input {
 		max-width: 80%
+	}
+
+
+
+	input.search-input:focus-visible {
+		outline: none !important;
+		-webkit-appearance: none !important;
 	}
 
 	.div-block-4 {
@@ -7816,3 +7860,16 @@ html.w-mod-js [data-ix=display-none] {
 	font-style: normal;
 	font-display: auto
 }
+
+nav.breadcrumb {
+	position: relative;
+	top: 140px;
+	left: 20px;
+}
+
+.breadcrumb-item {
+	text-decoration: none !important;
+	font-family: "Avenir";
+	font-size: 18px;
+}
+

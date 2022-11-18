@@ -8,9 +8,15 @@
 		<ul class="product-list">
 			<% %>
 				<% data.forEach(function(el){ %>
-					<li class="list-item"><a href="<%= `/product-page/${el.product_code}` %>">
+					<li class="list-item">
+						<a href="<%= `/product-page/${el.product_code}` %>">
+							<div class="product-list-image-wrapper">
+								<img class="product-list-image" src="<%=`${el.image_link}` %>" alt="">
+							</div>
+							<br>
 							<%= el.product_name %>
-						</a></li>
+						</a>
+					</li>
 					<% }) %>
 		</ul>
 	</div>

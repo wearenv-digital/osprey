@@ -1,18 +1,16 @@
-<!-- breadcrumbs -->
-<div class="crumb-holder">
-	<nav class="breadcrumb-nav">
-		<ul class="breadcrumb" aria-label="breadcrumb">
-			<% breadcrumbs.forEach(function(crumb) { %>
-				<% if (crumb._home !=true) { %>
-					<% crumb.name=`/ ${crumb.name}`%>
-						<% } else { %>
-							<% crumb.name=crumb.name %>
-								<% } %>
-									<li><a href="<%= `${crumb.url}` %> ">
-											<%= `${crumb.name}` %>
-										</a></li>
-									<% }) %>
-		</ul>
-	</nav>
-</div>
-<!-- breadcrumbs finish -->
+<nav class="breadcrumb">
+	<% if(breadcrumbs){ %>
+		<% for(let i=0; i<breadcrumbs.length; i++){ %>
+			<% if(i==(breadcrumbs.length - 1)){ %>
+				<span class="breadcrumb-item active">
+					<%= breadcrumbs[i].name %>
+				</span>
+				<%} else {%>
+					<a class="breadcrumb-item" href="<%=`//${breadcrumbs[i].url}` %>">
+						<% console.log(breadcrumbs[i].url) %>
+							<%= breadcrumbs[i].name %>
+					</a>
+					<% } %>
+						<% } %>
+							<% } %>
+</nav>

@@ -1,14 +1,39 @@
-function getBreadcrumbs(req, res, next) {
-	const urls = req.originalUrl.split('/');
-	urls.shift();
-	req.breadcrumbs = urls.map((url, i) => {
-		return {
-			breadcrumbName:
-				url === '' ? 'Home' : url.charAt(8).toUpperCase() + url.slice(1),
-			breadcrumbUrl: `/${urls.slice(0, i + 1).join('/')}`
-		};
-	});
-	next();
-}
+const Middleware = function () {
+	return function (req, res, next) {
+		let path = req.originalUrl;
+		console.log('path "req.originalUrl" ' + path);
 
-module.exports = getBreadcrumbs;
+		let breadCrumbs = path.split('/');
+		console.log('breadCrumbs : ' + breadCrumbs);
+
+		let index = breadCrumbs.indexOf('');
+		while (index !== -1) {
+			breadCrumbs.splice(index, 1);
+			index = breadCrumbs.indexOf('');
+		}
+
+		breadCrumbs.splice(0, 0, 'Home');
+		req.breadcrumbs = [];
+
+		// let urlPath;
+		let urlPath = req.headers.host;
+		console.log('urlPath is ' + urlPath);
+
+		for (let i = 0; i <= breadCrumbs.length - 1; i++) {
+			req.breadcrumbs.push({
+				name: '/' + ' ' + breadCrumbs[i],
+				url: urlPath
+			});
+
+			if (breadCrumbs[i + 1]) {
+				urlPath += '/' + breadCrumbs[i + 1];
+			}
+		}
+		console.log('url path is ' + urlPath);
+		next();
+	};
+};
+
+module.exports = {
+	Middleware
+};
